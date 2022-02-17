@@ -3,7 +3,7 @@ const router = express.Router();
 const Recipes = require('./model');
 
 router.get('/:id', (req, res) => {
-    Recipes.getRecipeByIds(req.params.id)
+    Recipes.getRecipeById(req.params.id)
         .then(recipe => {
             res.status(200).json(recipe);
         })
