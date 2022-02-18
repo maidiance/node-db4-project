@@ -14,15 +14,15 @@ async function getRecipeById(recipe_id) {
         created_at: result[0].created_at,
         steps: []
     }
-    for(let [index, step] of result) {
+    for(let [index, step] of result.entries()) {
         const ingredients = await db('steps_ingredients as si')
         .leftJoin('ingredients as i', 'si.ingredient_id', 'i.ingredient_id')
         .where('si.step_id', step.step_id)
         .orderBy('si.step_id');
+        recipe.steps[index] = {};
         recipe.steps[index].ingredients = [];
-        console.log(ingredients);
         if (ingredients == []) {
-            // empty ingredients    
+            // empty ingredients
         } else {
             ingredients.forEach( item => {
                 recipe.steps[index].ingredients.push({
