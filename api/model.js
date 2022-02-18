@@ -19,8 +19,14 @@ async function getRecipeById(recipe_id) {
         .leftJoin('ingredients as i', 'si.ingredient_id', 'i.ingredient_id')
         .where('si.step_id', step.step_id)
         .orderBy('si.step_id');
-        recipe.steps[index] = {};
-        recipe.steps[index].ingredients = [];
+        
+        recipe.steps.push({
+            step_id: step.step_id,
+            step_number: step.step_number,
+            step_instructions: step.step_instructions,
+            ingredients: []
+        });
+
         if (ingredients == []) {
             // empty ingredients
         } else {
@@ -32,11 +38,6 @@ async function getRecipeById(recipe_id) {
                 })
             });
         }
-        recipe.steps.push({
-            step_id: step.step_id,
-            step_number: step.step_number,
-            step_instructions: step.step_instructions
-        });
     }
     return recipe;
 }
